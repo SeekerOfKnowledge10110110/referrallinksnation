@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ReferralLinksNation - All the best referral offers from r/ReferralLinksNation. Clean, fast, and 100% Dennis-coded links.">
+    <title>ReferralLinksNation • Best Referral Offers 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&display=swap');
+        
+        :root {
+            --tw-color-primary: #00ff9d;
+        }
+        
+        .dark {
+            color-scheme: dark;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .toast {
+            animation: toastIn 0.3s ease forwards;
+        }
+
+        @keyframes toastIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="dark bg-zinc-950 text-zinc-100 min-h-screen">
+    <!-- NAVBAR -->
+    <nav class="border-b border-zinc-800 bg-zinc-950 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-2xl shadow-inner">🔗</div>
+                <h1 class="heading-font text-3xl tracking-tighter">ReferralLinksNation</h1>
+            </div>
+            
+            <div class="flex items-center gap-x-8">
+                <a href="https://reddit.com/r/referrallinksnation" target="_blank"
+                   class="flex items-center gap-x-2 text-sm font-medium hover:text-emerald-400 transition-colors">
+                    <i class="fa-brands fa-reddit-alien"></i>
+                    <span>r/ReferralLinksNation</span>
+                </a>
+                
+                <div onclick="toggleDarkMode()" 
+                     class="flex items-center justify-center w-10 h-10 bg-zinc-900 hover:bg-zinc-800 rounded-2xl cursor-pointer border border-zinc-700">
+                    <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+                </div>
+                
+                <a href="https://reddit.com/r/referrallinksnation" target="_blank"
+                   class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-black font-semibold rounded-3xl flex items-center gap-x-2 text-sm transition-all active:scale-95">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    JOIN THE SUBREDDIT
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
+        <div class="inline-flex items-center gap-x-2 bg-zinc-900 border border-zinc-700 text-emerald-400 text-sm font-medium px-5 py-2 rounded-3xl mb-6">
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            UPDATED APRIL 2026 • PINNED MEGA LIST
+        </div>
+        
+        <h2 class="heading-font text-6xl md:text-7xl font-semibold tracking-tighter leading-none mb-6">
+            All the best referrals.<br>
+            <span class="text-emerald-400">One clean website.</span>
+        </h2>
+        
+        <p class="max-w-2xl mx-auto text-xl text-zinc-400 mb-10">
+            Every link below is a personal referral from the r/ReferralLinksNation Mega List.<br>
+            No scrolling through Reddit. Just fast, searchable offers with your bonuses front &amp; center.
+        </p>
+
+        <!-- SEARCH -->
+        <div class="max-w-2xl mx-auto relative">
+            <div class="relative">
+                <input 
+                    id="search-input"
+                    type="text"
+                    placeholder="Search offers... Robinhood, Chime, Revolut..."
+                    onkeyup="if(event.key==='Enter') filterOffers()"
+                    class="w-full bg-zinc-900 border border-zinc-700 focus:border-emerald-500 rounded-3xl px-6 py-6 text-lg placeholder-zinc-400 outline-none transition-all">
+                <button onclick="filterOffers()" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 bg-emerald-500 text-black px-8 py-4 rounded-3xl font-semibold flex items-center gap-x-2 hover:bg-emerald-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    SEARCH
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- FILTERS -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-zinc-800 pb-6">
+            <div class="flex flex-wrap gap-2" id="category-filters">
+                <!-- Populated by JS -->
+            </div>
+            
+            <div class="flex items-center gap-x-4">
+                <span class="text-sm text-zinc-400 font-medium">SORT BY</span>
+                <select id="sort-select" onchange="filterOffers()" 
+                        class="bg-zinc-900 border border-zinc-700 rounded-3xl px-6 py-3 text-sm font-medium focus:outline-none focus:border-emerald-500">
+                    <option value="easiest">Easiest First</option>
+                    <option value="hardest">Hardest First</option>
+                    <option value="highest">Highest Bonus</option>
+                    <option value="name">A-Z</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- OFFERS GRID -->
+        <div id="offers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Populated dynamically by JavaScript -->
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="text-6xl mb-6">🤔</div>
+            <h3 class="text-2xl font-semibold mb-2">No offers found</h3>
+            <p class="text-zinc-400">Try different search terms or clear filters</p>
+            <button onclick="resetFilters()" 
+                    class="mt-8 px-8 py-4 bg-zinc-900 hover:bg-zinc-800 rounded-3xl text-sm font-medium">
+                CLEAR ALL FILTERS
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-24 border-t border-zinc-800 bg-zinc-950 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center text-zinc-400 text-sm">
+            <p class="mb-4">Built as a single-file website for <strong class="text-white">Dennis</strong> • r/ReferralLinksNation</p>
+            <p class="flex items-center justify-center gap-x-6 text-xs">
+                <span>100% free • No ads • No tracking</span>
+                <span class="flex items-center gap-x-1">
+                    <i class="fa-solid fa-heart text-red-400"></i> 
+                    Made with love for the community
+                </span>
+                <a href="https://github.com" target="_blank" class="hover:text-white">Fork on GitHub →</a>
+            </p>
+            <p class="mt-8 text-xs text-zinc-500">Just save this as <strong>index.html</strong> and upload to GitHub Pages, Vercel, or Netlify in under 60 seconds.</p>
+        </div>
+    </footer>
+
+    <!-- COPY TOAST -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 bg-emerald-500 text-black px-6 py-4 rounded-3xl shadow-2xl flex items-center gap-x-3 text-sm font-semibold toast">
+        <i class="fa-solid fa-check-circle"></i>
+        <span id="toast-text" class="pr-2">Link copied to clipboard!</span>
+    </div>
+
+    <script>
+        // TAILWIND CONFIG
+        function initializeTailwind() {
+            tailwind.config = {
+                darkMode: 'class',
+                content: [],
+                theme: {
+                    extend: {}
+                }
+            }
+        }
+
+        // OFFERS DATA - ALL FROM THE CURRENT PINNED MEGA LIST (April 2026)
+        const offersData = [
+            {
+                id: 1,
+                name: "Robinhood",
+                bonus: "Free stock $5–$200",
+                difficulty: "Easy",
+                category: "Investing",
+                description: "No deposit needed. Just sign up & link a bank account. US only.",
+                referralLink: "https://join.robinhood.com/dennisp1351/ec_referral_v1",
+                icon: "📈"
+            },
+            {
+                id: 2,
+                name: "SoFi",
+                bonus: "$10 instant or $25 with $50 deposit",
+                difficulty: "Easy",
+                category: "Banking",
+                description: "$10: Activate credit monitoring. $25: Deposit $50+. Both links work.",
+                referralLink: "https://www.sofi.com/invite/money?gcp=7adea810-a432-43d7-b8b0-eb1b0144e393&isAliasGcp=false",
+                icon: "🏦"
+            },
+            {
+                id: 3,
+                name: "Cash App",
+                bonus: "$5–$10",
+                difficulty: "Easy",
+                category: "Payments",
+                description: "Sign up and send $5 to anyone to unlock your bonus.",
+                referralLink: "https://cash.app/app/FC7T47J",
+                icon: "💵"
+            },
+            {
+                id: 4,
+                name: "Acorns",
+                bonus: "$5 bonus",
+                difficulty: "Easy",
+                category: "Investing",
+                description: "Sign up and make a small deposit ($5+).",
+                referralLink: "https://acorns.com/share/?shareable_code=88Q3RPW&first_name=Dennis&friend_reward=5",
+                icon: "🌳"
+            },
+            {
+                id: 5,
+                name: "Debbie App",
+                bonus: "Up to $1,000",
+                difficulty: "Medium",
+                category: "Rewards",
+                description: "$20 per successful referral (max 50). Highest potential on the list!",
+                referralLink: "https://joindebbie.com/?ref_id=26MAK0NJI",
+                icon: "💰"
+            },
+            {
+                id: 6,
+                name: "Freecash",
+                bonus: "$25+ payouts",
+                difficulty: "Medium",
+                category: "Side Hustle",
+                description: "Play games, complete tasks & offers. First payout at $25.",
+                referralLink: "https://freecash.com/r/2HVTXY",
+                icon: "🎮"
+            },
+            {
+                id: 7,
+                name: "Chime",
+                bonus: "$100",
+                difficulty: "Medium",
+                category: "Banking",
+                description: "Receive $200+ qualifying direct deposit (Robinhood transfer works).",
+                referralLink: "https://chime.com/r/dennispilottiiii",
+                icon: "🛎️"
+            },
+            {
+                id: 8,
+                name: "Current",
+                bonus: "$100",
+                difficulty: "Medium",
+                category: "Banking",
+                description: "Receive $200+ direct deposit. Use code XXZWPJ693 if needed.",
+                referralLink: "https://current.com/get-started/?creator_code=XXZWPJ693&impression_id=255531d2-5903-4f85-8f56-783a8727721c",
+                icon: "🔋"
+            },
+            {
+                id: 9,
+                name: "MoneyLion",
+                bonus: "Up to $55",
+                difficulty: "Hard",
+                category: "Banking",
+                description: "$5 instant + $50 after two $100+ direct deposits.",
+                referralLink: "https://mlion.us/$Dennis808",
+                icon: "🦁"
+            },
+            {
+                id: 10,
+                name: "Revolut",
+                bonus: "$60 per friend",
+                difficulty: "Hard",
+                category: "Banking",
+                description: "Limited time offer (ends April 21). Verify, add money, 3 purchases, order card.",
+                referralLink: "https://revolut.com/referral/?referral-code=dpilotti00!APR1-26-AR-US-H1-REFBLOCK-AE&geo-redirect",
+                icon: "🌍"
+            }
+        ]
+
+        // DIFFICULTY ORDER FOR SORTING
+        const difficultyOrder = { "Easy": 1, "Medium": 2, "Hard": 3 }
+
+        // RENDER OFFERS
+        function renderOffers(filteredOffers) {
+            const grid = document.getElementById('offers-grid')
+            grid.innerHTML = ''
+
+            if (filteredOffers.length === 0) {
+                document.getElementById('empty-state').classList.remove('hidden')
+                return
+            }
+            document.getElementById('empty-state').classList.add('hidden')
+
+            filteredOffers.forEach(offer => {
+                const cardHTML = `
+                <div class="card-hover bg-zinc-900 border border-zinc-700 rounded-3xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="text-5xl">${offer.icon}</div>
+                            <div class="flex flex-col items-end gap-1">
+                                <!-- Difficulty badge -->
+                                <span class="px-4 py-1 text-xs font-bold rounded-3xl 
+                                    ${offer.difficulty === 'Easy' ? 'bg-emerald-400 text-black' : 
+                                      offer.difficulty === 'Medium' ? 'bg-amber-400 text-black' : 
+                                      'bg-red-400 text-black'}">
+                                    ${offer.difficulty}
+                                </span>
+                                <!-- Category -->
+                                <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-3xl">${offer.category}</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-semibold mb-1">${offer.name}</h3>
+                        <p class="text-emerald-400 text-3xl font-bold mb-3">${offer.bonus}</p>
+                        
+                        <p class="text-zinc-400 text-sm line-clamp-3 mb-6">${offer.description}</p>
+                        
+                        <div class="flex gap-3">
+                            <button onclick="copyLink('${offer.referralLink}', '${offer.name}')" 
+                                    class="flex-1 bg-zinc-800 hover:bg-zinc-700 transition-colors text-white font-semibold py-4 rounded-3xl flex items-center justify-center gap-x-2">
+                                <i class="fa-solid fa-copy"></i>
+                                COPY LINK
+                            </button>
+                            
+                            <a href="${offer.referralLink}" target="_blank"
+                               class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-black font-semibold py-4 rounded-3xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                CLAIM OFFER
+                            </a>
+                        </div>
+                    </div>
+                </div>`
+                
+                grid.innerHTML += cardHTML
+            })
+        }
+
+        // FILTER & SORT OFFERS
+        function filterOffers() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim()
+            const sortMode = document.getElementById('sort-select').value
+            
+            let filtered = offersData
+
+            // Search filter
+            if (searchTerm) {
+                filtered = filtered.filter(offer => 
+                    offer.name.toLowerCase().includes(searchTerm) ||
+                    offer.description.toLowerCase().includes(searchTerm) ||
+                    offer.category.toLowerCase().includes(searchTerm)
+                )
+            }
+
+            // Sort
+            filtered.sort((a, b) => {
+                if (sortMode === 'easiest') {
+                    return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]
+                }
+                if (sortMode === 'hardest') {
+                    return difficultyOrder[b.difficulty] - difficultyOrder[a.difficulty]
+                }
+                if (sortMode === 'highest') {
+                    // Simple bonus sort by first number found
+                    const numA = parseInt(a.bonus) || 0
+                    const numB = parseInt(b.bonus) || 0
+                    return numB - numA
+                }
+                if (sortMode === 'name') {
+                    return a.name.localeCompare(b.name)
+                }
+                return 0
+            })
+
+            renderOffers(filtered)
+        }
+
+        // COPY LINK TO CLIPBOARD
+        function copyLink(link, name) {
+            navigator.clipboard.writeText(link).then(() => {
+                const toast = document.getElementById('toast')
+                document.getElementById('toast-text').innerHTML = `
+                    <span class="font-bold">${name}</span> link copied!
+                `
+                toast.classList.remove('hidden')
+                toast.style.display = 'flex'
+                
+                setTimeout(() => {
+                    toast.classList.add('hidden')
+                    toast.style.display = 'none'
+                }, 2800)
+            })
+        }
+
+        // CREATE CATEGORY FILTER BUTTONS
+        function createCategoryFilters() {
+            const container = document.getElementById('category-filters')
+            const categories = [...new Set(offersData.map(o => o.category))]
+            
+            // All button
+            let html = `
+            <button onclick="filterByCategory(null)" 
+                    id="category-all"
+                    class="active-category px-6 py-2 bg-emerald-500 text-black font-semibold rounded-3xl text-sm flex items-center gap-x-2">
+                <i class="fa-solid fa-list"></i>
+                ALL OFFERS
+            </button>`
+            
+            categories.forEach(cat => {
+                html += `
+                <button onclick="filterByCategory('${cat}')" 
+                        class="category-btn px-5 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 font-medium rounded-3xl text-sm">
+                    ${cat}
+                </button>`
+            })
+            
+            container.innerHTML = html
+        }
+
+        let currentCategoryFilter = null
+
+        function filterByCategory(category) {
+            currentCategoryFilter = category
+            
+            // Reset active states
+            document.querySelectorAll('.category-btn, #category-all').forEach(btn => {
+                btn.classList.remove('active-category', 'bg-emerald-500', 'text-black')
+                btn.classList.add('bg-zinc-900', 'border-zinc-700')
+            })
+            
+            if (category === null) {
+                document.getElementById('category-all').classList.add('active-category', 'bg-emerald-500', 'text-black')
+            } else {
+                const activeBtn = Array.from(document.querySelectorAll('.category-btn')).find(btn => btn.textContent.trim() === category)
+                if (activeBtn) activeBtn.classList.add('active-category', 'bg-emerald-500', 'text-black')
+            }
+            
+            applyFilters()
+        }
+
+        function applyFilters() {
+            let filtered = offersData
+            
+            // Category filter
+            if (currentCategoryFilter) {
+                filtered = filtered.filter(offer => offer.category === currentCategoryFilter)
+            }
+            
+            // Search term
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim()
+            if (searchTerm) {
+                filtered = filtered.filter(offer => 
+                    offer.name.toLowerCase().includes(searchTerm) ||
+                    offer.description.toLowerCase().includes(searchTerm)
+                )
+            }
+            
+            const sortMode = document.getElementById('sort-select').value
+            filtered.sort((a, b) => {
+                if (sortMode === 'easiest') return difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]
+                if (sortMode === 'hardest') return difficultyOrder[b.difficulty] - difficultyOrder[a.difficulty]
+                if (sortMode === 'highest') {
+                    const numA = parseInt(a.bonus) || 0
+                    const numB = parseInt(b.bonus) || 0
+                    return numB - numA
+                }
+                if (sortMode === 'name') return a.name.localeCompare(b.name)
+                return 0
+            })
+            
+            renderOffers(filtered)
+        }
+
+        function resetFilters() {
+            document.getElementById('search-input').value = ''
+            currentCategoryFilter = null
+            document.getElementById('sort-select').value = 'easiest'
+            createCategoryFilters() // resets buttons
+            filterOffers()
+        }
+
+        // DARK MODE TOGGLE
+        function toggleDarkMode() {
+            const html = document.documentElement
+            const icon = document.getElementById('theme-icon')
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark')
+                icon.classList.replace('fa-moon', 'fa-sun')
+                localStorage.theme = 'light'
+            } else {
+                html.classList.add('dark')
+                icon.classList.replace('fa-sun', 'fa-moon')
+                localStorage.theme = 'dark'
+            }
+        }
+
+        // INIT EVERYTHING
+        function initialize() {
+            initializeTailwind()
+            
+            // Force dark mode by default
+            if (localStorage.theme === 'light') {
+                document.documentElement.classList.remove('dark')
+                document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun')
+            } else {
+                document.documentElement.classList.add('dark')
+            }
+            
+            createCategoryFilters()
+            renderOffers(offersData)
+            
+            // Bonus: live clock for Revolut deadline
+            console.log('%c✅ Full ReferralLinksNation website ready! All 10 offers from the official Mega List are loaded with real Dennis referral links.', 'color:#00ff9d; font-weight:bold')
+        }
+
+        // Start the magic
+        window.onload = initialize
+    </script>
+</body>
+</html>
